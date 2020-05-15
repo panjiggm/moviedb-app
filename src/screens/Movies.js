@@ -4,6 +4,7 @@ import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {request} from '../utils/api';
 import MostPopular from '../components/MostPopular';
 import NowPlaying from '../components/NowPlaying';
+import SliderCarousel from '../components/SliderCarousel';
 
 const Movies = () => {
   const [popular, setPopular] = useState([]);
@@ -36,8 +37,11 @@ const Movies = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View>
+    <ScrollView>
+      <View style={{marginTop: 10}}>
+        <SliderCarousel />
+      </View>
+      <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Popular Movies</Text>
         </View>
@@ -48,7 +52,7 @@ const Movies = () => {
         </ScrollView>
       </View>
 
-      <View style={{marginTop: 20}}>
+      <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Free To Watch</Text>
         </View>
@@ -58,7 +62,7 @@ const Movies = () => {
           ))}
         </ScrollView>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -70,6 +74,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     marginVertical: 10,
+    marginTop: 40,
   },
   title: {
     fontWeight: 'bold',
