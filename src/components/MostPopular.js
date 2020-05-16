@@ -8,9 +8,15 @@ import {
 import {Card, Badge} from 'react-native-paper';
 import {darkBlue} from '../utils/colors';
 
-const MostPopular = ({popular, loading}) => {
+const MostPopular = ({popular, loading, navigation}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Movie Details', {
+          movieId: popular.id,
+          title: popular.title,
+        })
+      }>
       <View style={styles.cardView}>
         {loading ? (
           <ActivityIndicator size="small" color={darkBlue} />

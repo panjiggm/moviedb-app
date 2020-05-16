@@ -2,10 +2,10 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Movies from '../screens/Movies';
+import MovieStack from './MovieStack';
 import Search from '../screens/Search';
 import TvShows from '../screens/TvShows';
-import {white, darkBlue, blue} from '../utils/colors';
+import {white, darkBlue, blue, pink} from '../utils/colors';
 
 const Tabs = createBottomTabNavigator();
 
@@ -32,7 +32,7 @@ const NavigationTabs = () => {
         inactiveTintColor: blue,
         tabStyle: {backgroundColor: white},
       }}>
-      <Tabs.Screen name="Movies" component={Movies}></Tabs.Screen>
+      <Tabs.Screen name="Movies" component={MovieStack}></Tabs.Screen>
       <Tabs.Screen name="TV Shows" component={TvShows}></Tabs.Screen>
       <Tabs.Screen name="Search" component={Search}></Tabs.Screen>
     </Tabs.Navigator>

@@ -20,6 +20,10 @@ const SliderCarousel = () => {
     };
 
     getImageCarousel();
+
+    return () => {
+      console.log('clear carousel');
+    };
   }, []);
 
   //   console.log(carousel);

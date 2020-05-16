@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, StatusBar} from 'react-native';
 
-import {request} from '../utils/api';
-import MostPopular from '../components/MostPopular';
-import NowPlaying from '../components/NowPlaying';
-import SliderCarousel from '../components/SliderCarousel';
+import {request} from '../../utils/api';
+import MostPopular from '../../components/MostPopular';
+import NowPlaying from '../../components/NowPlaying';
+import SliderCarousel from '../../components/SliderCarousel';
 
-const Movies = () => {
+const Movies = ({navigation}) => {
   const [popular, setPopular] = useState([]);
   const [nowPlaying, setNowPlaying] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +38,8 @@ const Movies = () => {
 
   return (
     <ScrollView>
-      <View style={{marginTop: 10}}>
+      <StatusBar backgroundColor="transparent" />
+      <View>
         <SliderCarousel />
       </View>
       <View style={styles.container}>
@@ -47,7 +48,12 @@ const Movies = () => {
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {popular.map((item, index) => (
-            <MostPopular key={index} popular={item} loading={isLoading} />
+            <MostPopular
+              key={index}
+              popular={item}
+              loading={isLoading}
+              navigation={navigation}
+            />
           ))}
         </ScrollView>
       </View>

@@ -1,12 +1,5 @@
 import React, {createRef, Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Dimensions,
-  Image,
-} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Dimensions} from 'react-native';
 import {Card} from 'react-native-paper';
 import {darkGray} from '../utils/colors';
 
