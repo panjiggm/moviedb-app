@@ -8,9 +8,15 @@ import {
 import {Card, Badge} from 'react-native-paper';
 import {darkBlue} from '../utils/colors';
 
-const NowPlaying = ({nowPlaying, loading}) => {
+const NowPlaying = ({nowPlaying, loading, navigation}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Movie Details', {
+          movieId: nowPlaying.id,
+          title: nowPlaying.title,
+        })
+      }>
       <View style={styles.cardView}>
         {loading ? (
           <ActivityIndicator size="small" color={darkBlue} />

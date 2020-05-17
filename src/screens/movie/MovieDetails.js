@@ -4,8 +4,8 @@ import {
   Text,
   View,
   ScrollView,
-  Dimensions,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import {request} from '../../utils/api';
 import {Card, Divider} from 'react-native-paper';
@@ -13,17 +13,18 @@ import {darkGray, pink, darkBlue} from '../../utils/colors';
 import {convertMinsToHrsMins} from '../../utils/time';
 import isoLoanguage from '../../data/iso.json';
 import MovieCasts from '../../components/MovieCasts';
-
-const DEVICE_WIDTH = Dimensions.get('window').width;
+import MovieVideo from '../../components/MovieVideo';
 
 const MovieDetails = ({route}) => {
   const [movie, setMovie] = useState([]);
   const [genres, setGenres] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const {movieId} = route.params;
 
   useEffect(() => {
     const getMovie = async () => {
+      setLoading(true);
       try {
         const movieData = await request(`movie/${movieId}`);
         const genres = await movieData.genres
@@ -32,6 +33,7 @@ const MovieDetails = ({route}) => {
 
         setMovie(movieData);
         setGenres(genres);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -68,30 +70,37 @@ const MovieDetails = ({route}) => {
             />
           </Card>
         </View>
-        <View style={{marginLeft: 25}}>
-          <Text style={styles.movieTitle}>{movie.title}</Text>
-          <View style={{flexDirection: 'row', marginTop: 7}}>
-            <View style={{marginRight: 25}}>
-              <Text style={styles.movieText}>Genre</Text>
-              <Text style={styles.movieText}>Duration</Text>
-              <Text style={styles.movieText}>Language</Text>
-              <Text style={styles.movieText}>Rating</Text>
-            </View>
-            <View>
-              <Text style={styles.movieVal}>{genres}</Text>
-              <Text style={styles.movieVal}>
-                {convertMinsToHrsMins(movie.runtime)}
-              </Text>
-              <Text style={styles.movieVal}>
-                {isoLoanguage[movie.original_language]}
-              </Text>
-              <Text
-                style={[styles.movieVal, {fontWeight: 'bold', color: pink}]}>
-                {movie.vote_average}
-              </Text>
+        {loading ? (
+          <ActivityIndicator size="small" />
+        ) : (
+          <View style={{marginLeft: 25}}>
+            <Text style={styles.movieTitle}>{movie.title}</Text>
+            <Text style={styles.movieYear}>
+              {new Date(movie.release_date).getFullYear()}
+            </Text>
+            <View style={{flexDirection: 'row', marginTop: 7}}>
+              <View style={{marginRight: 25}}>
+                <Text style={styles.movieText}>Genre</Text>
+                <Text style={styles.movieText}>Duration</Text>
+                <Text style={styles.movieText}>Language</Text>
+                <Text style={styles.movieText}>Rating</Text>
+              </View>
+              <View>
+                <Text style={styles.movieVal}>{genres}</Text>
+                <Text style={styles.movieVal}>
+                  {convertMinsToHrsMins(movie.runtime)}
+                </Text>
+                <Text style={styles.movieVal}>
+                  {isoLoanguage[movie.original_language]}
+                </Text>
+                <Text
+                  style={[styles.movieVal, {fontWeight: 'bold', color: pink}]}>
+                  {movie.vote_average}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
+        )}
       </View>
       <Divider style={{marginVertical: 20}} />
       <View style={{marginHorizontal: 10}}>
@@ -106,6 +115,10 @@ const MovieDetails = ({route}) => {
         <MovieCasts movieId={movieId} />
       </View>
       <Divider style={{marginVertical: 20}} />
+      <View style={{marginHorizontal: 10}}>
+        <Text style={styles.movieTitle}>Video</Text>
+        <MovieVideo movieId={movieId} />
+      </View>
     </ScrollView>
   );
 };
@@ -123,6 +136,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textTransform: 'uppercase',
+  },
+  movieYear: {
+    fontSize: 15,
+    color: darkBlue,
   },
   movieText: {
     marginVertical: 3,

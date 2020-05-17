@@ -40,7 +40,7 @@ const Movies = ({navigation}) => {
     <ScrollView>
       <StatusBar backgroundColor="transparent" />
       <View>
-        <SliderCarousel />
+        <SliderCarousel navigation={navigation} />
       </View>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -64,7 +64,12 @@ const Movies = ({navigation}) => {
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {nowPlaying.map((item, index) => (
-            <NowPlaying key={index} nowPlaying={item} loading={isLoading} />
+            <NowPlaying
+              key={index}
+              nowPlaying={item}
+              loading={isLoading}
+              navigation={navigation}
+            />
           ))}
         </ScrollView>
       </View>

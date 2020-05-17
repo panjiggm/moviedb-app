@@ -28,7 +28,7 @@ const MovieCasts = ({movieId}) => {
   }, []);
 
   return (
-    <View>
+    <View style={{marginTop: 10}}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {casts.map((cast, index) => (
           <View key={index} style={styles.container}>

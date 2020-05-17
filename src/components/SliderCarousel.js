@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {darkGray} from '../utils/colors';
 import {request} from '../utils/api';
 import BackgroundCarousel from './BackgroundCarousel';
 
-const SliderCarousel = () => {
+const SliderCarousel = ({navigation}) => {
   const [carousel, setCarousel] = useState([]);
 
   useEffect(() => {
@@ -26,11 +26,9 @@ const SliderCarousel = () => {
     };
   }, []);
 
-  //   console.log(carousel);
-
   return (
     <View style={styles.container}>
-      <BackgroundCarousel images={carousel} />
+      <BackgroundCarousel images={carousel} navigation={navigation} />
     </View>
   );
 };

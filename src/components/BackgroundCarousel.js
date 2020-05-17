@@ -1,7 +1,14 @@
 import React, {createRef, Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import {Card} from 'react-native-paper';
-import {darkGray} from '../utils/colors';
+import {darkGray, white} from '../utils/colors';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -47,7 +54,7 @@ class BackgroundCarousel extends Component {
   };
 
   render() {
-    const {images} = this.props;
+    const {images, navigation} = this.props;
     return (
       <View style={styles.container}>
         <ScrollView
@@ -57,14 +64,28 @@ class BackgroundCarousel extends Component {
           onMomentumScrollEnd={this.indexSelected}
           showsHorizontalScrollIndicator={false}>
           {images.map((image, i) => (
-            <Card key={i}>
-              <Card.Cover
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w500${image.backdrop_path}`,
-                }}
-                style={styles.backgroundImg}
-              />
-            </Card>
+            <TouchableOpacity
+              key={i}
+              onPress={() =>
+                navigation.navigate('Movie Details', {
+                  movieId: image.id,
+                  title: image.title,
+                })
+              }>
+              <Card>
+                <Card.Cover
+                  source={{
+                    uri: `https://image.tmdb.org/t/p/w500${image.backdrop_path}`,
+                  }}
+                  style={styles.backgroundImg}
+                />
+                <Card.Title
+                  title={image.title}
+                  titleStyle={{color: white}}
+                  style={styles.title}
+                />
+              </Card>
+            </TouchableOpacity>
           ))}
         </ScrollView>
         <View style={styles.dotContainer}>
@@ -89,6 +110,10 @@ const styles = StyleSheet.create({
   backgroundImg: {
     height: 200,
     width: DEVICE_WIDTH,
+  },
+  title: {
+    position: 'absolute',
+    bottom: -5,
   },
   dotContainer: {
     // position: 'absolute',
