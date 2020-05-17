@@ -1,18 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 
-import {request} from '../utils/api';
+import {request} from '../../utils/api';
 import {Avatar} from 'react-native-paper';
-import {darkGray} from '../utils/colors';
+import {darkGray} from '../../utils/colors';
 
-const MovieCasts = ({movieId}) => {
+const TvCasts = ({tvId}) => {
   const [casts, setCasts] = useState([]);
 
   useEffect(() => {
     const getCasts = async () => {
       try {
-        const caster = await request(`movie/${movieId}/credits`);
+        const caster = await request(`tv/${tvId}/credits`);
         const result = await caster.cast;
+
+        // console.log(caster);
 
         await setCasts(result);
       } catch (error) {
@@ -47,7 +49,7 @@ const MovieCasts = ({movieId}) => {
   );
 };
 
-export default MovieCasts;
+export default TvCasts;
 
 const styles = StyleSheet.create({
   container: {

@@ -2,16 +2,16 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {YouTubeStandaloneAndroid} from 'react-native-youtube';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {request} from '../utils/api';
-import {pink, white} from '../utils/colors';
+import {request} from '../../utils/api';
+import {pink, white} from '../../utils/colors';
 
-const MovieVideo = ({movieId}) => {
+const TvVideo = ({tvId}) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     const getVideos = async () => {
       try {
-        const trailer = await request(`movie/${movieId}/videos`);
+        const trailer = await request(`tv/${tvId}/videos`);
         const result = await trailer.results[0];
 
         setVideos(result);
@@ -54,7 +54,7 @@ const MovieVideo = ({movieId}) => {
   );
 };
 
-export default MovieVideo;
+export default TvVideo;
 
 const styles = StyleSheet.create({
   buttonGroup: {

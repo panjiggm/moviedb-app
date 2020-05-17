@@ -1,9 +1,8 @@
 import React from 'react';
-import {createStackNavigator, Header} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import Movies from '../screens/movie/Movies';
 import MovieDetails from '../screens/movie/MovieDetails';
-import {white, pink, black} from '../utils/colors';
 
 const Stack = createStackNavigator();
 

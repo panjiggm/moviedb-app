@@ -1,20 +1,20 @@
 import React from 'react';
 import {
   StyleSheet,
+  View,
   TouchableOpacity,
   ActivityIndicator,
-  View,
 } from 'react-native';
 import {Card, Badge} from 'react-native-paper';
-import {darkBlue} from '../utils/colors';
+import {darkBlue} from '../../utils/colors';
 
-const NowPlaying = ({nowPlaying, loading, navigation}) => {
+const MostPopular = ({popular, loading, navigation}) => {
   return (
     <TouchableOpacity
       onPress={() =>
         navigation.navigate('Movie Details', {
-          movieId: nowPlaying.id,
-          title: nowPlaying.title,
+          movieId: popular.id,
+          title: popular.title,
         })
       }>
       <View style={styles.cardView}>
@@ -24,7 +24,7 @@ const NowPlaying = ({nowPlaying, loading, navigation}) => {
           <Card>
             <Card.Cover
               source={{
-                uri: `https://image.tmdb.org/t/p/w500${nowPlaying.poster_path}`,
+                uri: `https://image.tmdb.org/t/p/w500${popular.poster_path}`,
               }}
               style={{borderRadius: 5}}
             />
@@ -41,7 +41,7 @@ const NowPlaying = ({nowPlaying, loading, navigation}) => {
                     marginRight: 10,
                     fontWeight: 'bold',
                   }}>
-                  {nowPlaying.vote_average}
+                  {popular.vote_average}
                 </Badge>
               )}
             />
@@ -52,7 +52,7 @@ const NowPlaying = ({nowPlaying, loading, navigation}) => {
   );
 };
 
-export default NowPlaying;
+export default MostPopular;
 
 const styles = StyleSheet.create({
   cardView: {

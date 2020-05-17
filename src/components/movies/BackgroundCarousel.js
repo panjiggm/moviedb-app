@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Card} from 'react-native-paper';
-import {darkGray, white} from '../utils/colors';
+import {darkGray, white} from '../../utils/colors';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -78,6 +78,11 @@ class BackgroundCarousel extends Component {
                     uri: `https://image.tmdb.org/t/p/w500${image.backdrop_path}`,
                   }}
                   style={styles.backgroundImg}
+                />
+                <Card.Title
+                  title={image.name}
+                  titleStyle={{color: white}}
+                  style={styles.title}
                 />
                 <Card.Title
                   title={image.title}

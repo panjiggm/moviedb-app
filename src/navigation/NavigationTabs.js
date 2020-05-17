@@ -3,8 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import MovieStack from './MovieStack';
-import Search from '../screens/Search';
-import TvShows from '../screens/TvShows';
+import TvStack from './TvStack';
 import {white, darkBlue, blue, pink} from '../utils/colors';
 
 const Tabs = createBottomTabNavigator();
@@ -33,8 +32,7 @@ const NavigationTabs = () => {
         tabStyle: {backgroundColor: white},
       }}>
       <Tabs.Screen name="Movies" component={MovieStack}></Tabs.Screen>
-      <Tabs.Screen name="TV Shows" component={TvShows}></Tabs.Screen>
-      <Tabs.Screen name="Search" component={Search}></Tabs.Screen>
+      <Tabs.Screen name="TV Shows" component={TvStack}></Tabs.Screen>
     </Tabs.Navigator>
   );
 };

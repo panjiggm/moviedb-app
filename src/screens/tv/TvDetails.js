@@ -10,28 +10,27 @@ import {
 import {request} from '../../utils/api';
 import {Card, Divider} from 'react-native-paper';
 import {darkGray, pink, darkBlue} from '../../utils/colors';
-import {convertMinsToHrsMins} from '../../utils/time';
 import isoLoanguage from '../../data/iso.json';
-import MovieCasts from '../../components/movies/MovieCasts';
-import MovieVideo from '../../components/movies/MovieVideo';
+import TvCasts from '../../components/tvs/TvCasts';
+import TvVideo from '../../components/tvs/TvVideo';
 
-const MovieDetails = ({route}) => {
-  const [movie, setMovie] = useState([]);
+const TvDetails = ({route}) => {
+  const [tv, setTv] = useState([]);
   const [genres, setGenres] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const {movieId} = route.params;
+  const {tvId} = route.params;
 
   useEffect(() => {
-    const getMovie = async () => {
+    const getTvs = async () => {
       setLoading(true);
       try {
-        const movieData = await request(`movie/${movieId}`);
-        const genres = await movieData.genres
+        const tvData = await request(`tv/${tvId}`);
+        const genres = await tvData.genres
           .map((genre) => genre.name)
           .join(', ');
 
-        setMovie(movieData);
+        setTv(tvData);
         setGenres(genres);
         setLoading(false);
       } catch (error) {
@@ -39,10 +38,10 @@ const MovieDetails = ({route}) => {
       }
     };
 
-    getMovie();
+    getTvs();
 
     return () => {
-      console.log('clean up movie details');
+      console.log('clean up tv details');
     };
   }, []);
 
@@ -53,7 +52,7 @@ const MovieDetails = ({route}) => {
         <Card>
           <Card.Cover
             source={{
-              uri: `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`,
+              uri: `https://image.tmdb.org/t/p/w500${tv.backdrop_path}`,
             }}
             style={{}}
           />
@@ -64,7 +63,7 @@ const MovieDetails = ({route}) => {
           <Card>
             <Card.Cover
               source={{
-                uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+                uri: `https://image.tmdb.org/t/p/w500${tv.poster_path}`,
               }}
               style={{width: 80, height: 120}}
             />
@@ -74,28 +73,26 @@ const MovieDetails = ({route}) => {
           <ActivityIndicator size="small" />
         ) : (
           <View style={{marginLeft: 25}}>
-            <Text style={styles.movieTitle}>{movie.title}</Text>
+            <Text style={styles.movieTitle}>{tv.name}</Text>
             <Text style={styles.movieYear}>
-              {new Date(movie.release_date).getFullYear()}
+              {new Date(tv.first_air_date).getFullYear()}
             </Text>
             <View style={{flexDirection: 'row', marginTop: 7}}>
               <View style={{marginRight: 25}}>
                 <Text style={styles.movieText}>Genre</Text>
-                <Text style={styles.movieText}>Duration</Text>
+                <Text style={styles.movieText}>Seasons</Text>
                 <Text style={styles.movieText}>Language</Text>
                 <Text style={styles.movieText}>Rating</Text>
               </View>
               <View>
                 <Text style={styles.movieVal}>{genres}</Text>
+                <Text style={styles.movieVal}>{tv.number_of_seasons}</Text>
                 <Text style={styles.movieVal}>
-                  {convertMinsToHrsMins(movie.runtime)}
-                </Text>
-                <Text style={styles.movieVal}>
-                  {isoLoanguage[movie.original_language]}
+                  {isoLoanguage[tv.original_language]}
                 </Text>
                 <Text
                   style={[styles.movieVal, {fontWeight: 'bold', color: pink}]}>
-                  {movie.vote_average}
+                  {tv.vote_average}
                 </Text>
               </View>
             </View>
@@ -106,24 +103,24 @@ const MovieDetails = ({route}) => {
       <View style={{marginHorizontal: 10}}>
         <Text style={styles.movieTitle}>Synopsis</Text>
         <Text style={{textAlign: 'justify', color: darkBlue, marginTop: 7}}>
-          {movie.overview}
+          {tv.overview}
         </Text>
       </View>
       <Divider style={{marginVertical: 20}} />
       <View style={{marginHorizontal: 10}}>
         <Text style={styles.movieTitle}>Casts</Text>
-        <MovieCasts movieId={movieId} />
+        <TvCasts tvId={tvId} />
       </View>
       <Divider style={{marginVertical: 20}} />
       <View style={{marginHorizontal: 10}}>
         <Text style={styles.movieTitle}>Video</Text>
-        <MovieVideo movieId={movieId} />
+        <TvVideo tvId={tvId} />
       </View>
     </ScrollView>
   );
 };
 
-export default MovieDetails;
+export default TvDetails;
 
 const styles = StyleSheet.create({
   container: {},

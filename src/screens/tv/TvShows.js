@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView, StatusBar} from 'react-native';
 
 import {request} from '../../utils/api';
-import MostPopular from '../../components/movies/MostPopular';
-import NowPlaying from '../../components/movies/NowPlaying';
-import BackgroundCarousel from '../../components/movies/BackgroundCarousel';
+import BackgroundCarousel from '../../components/tvs/BackgroundCarousel';
+import MostPopular from '../../components/tvs/MostPopular';
+import NowPlaying from '../../components/tvs/NowPlaying';
 
-const Movies = ({navigation}) => {
+const TvShows = ({navigation}) => {
   const [popular, setPopular] = useState([]);
   const [nowPlaying, setNowPlaying] = useState([]);
   const [carousel, setCarousel] = useState([]);
@@ -14,19 +14,19 @@ const Movies = ({navigation}) => {
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    requestMovies();
+    requestTvShows();
 
     return () => {
-      console.log('cleanup request movie');
+      console.log('cleanup request tv show');
     };
   }, []);
 
-  const requestMovies = async () => {
+  const requestTvShows = async () => {
     try {
       setIsLoading(true);
-      const popular = await request('movie/popular', {page: 1});
-      const nowPlaying = await request('movie/now_playing', {page: 1});
-      const carousel = await request('movie/top_rated', {page: 1});
+      const popular = await request('tv/popular', {page: 1});
+      const nowPlaying = await request('tv/airing_today', {page: 1});
+      const carousel = await request('tv/top_rated', {page: 1});
 
       const slicedCarousel = await carousel.results.slice(13, 20);
 
@@ -50,7 +50,7 @@ const Movies = ({navigation}) => {
 
       <View style={[styles.container, {marginBottom: 30}]}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Popular Movies</Text>
+          <Text style={styles.title}>Popular TV Show</Text>
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {popular.map((item, index) => (
@@ -66,7 +66,7 @@ const Movies = ({navigation}) => {
 
       <View style={[styles.container, {marginBottom: 30}]}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Free To Watch</Text>
+          <Text style={styles.title}>TV Airing Today</Text>
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {nowPlaying.map((item, index) => (
@@ -83,7 +83,7 @@ const Movies = ({navigation}) => {
   );
 };
 
-export default Movies;
+export default TvShows;
 
 const styles = StyleSheet.create({
   container: {
